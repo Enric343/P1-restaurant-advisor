@@ -1,0 +1,16 @@
+# Configuración de entorno
+*.env
+
+# Dependencias
+node_modules/*
+
+# Archivos de logs
+npm-debug.log*
+
+# Editores
+.idea/*
+.vscode/*
+
+# Archivos temporales
+*.log
+*.tmp
