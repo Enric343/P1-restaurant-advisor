@@ -19,7 +19,7 @@ exports.homePage = (req, res) => {
 
 exports.addStore = (req, res) => {
     //same template is used to create and to edit
-    res.render('editStore', { title: 'Add Store' });
+    res.render('editStore', { title: 'Add Store', timeSlots: res.locals.h.timeSlots });
 };
 
 exports.createStore = async (req, res) => {
@@ -28,7 +28,6 @@ exports.createStore = async (req, res) => {
 
     const store = new Store(req.body);
     const savedStore = await store.save();
-    console.log('Store saved!');
 
     req.flash('success', `Successfully Created ${store.name}.`);
     res.redirect(`/store/${savedStore.slug}`);
@@ -57,8 +56,6 @@ exports.upload = async (req, res, next) => {
         return;
     }
 
-    console.log(req.body);
-    console.log(req.file);
     const extension = req.file.mimetype.split('/')[1];
     req.body.photo = `${uuid.v4()}.${extension}`;
 
@@ -81,8 +78,13 @@ exports.getStoreBySlug = async (req, res, next) => {
     }
 
     let rating = await store.getAverageRating();
-    let reservations = await Reservation.findNotExpired(req.user._id,  store._id );
-    reservations.sort((a, b) => a.date - b.date);
+
+    let reservations = [];
+    if (req.user) {
+        reservations = await Reservation.findNotExpired(req.user._id,  store._id );
+        reservations.sort((a, b) => a.date - b.date);
+        console.log(reservations);
+    }
     
     res.render('store', { title: store.name, store: store, rating: rating,  reservations: reservations });
 };
@@ -146,13 +148,14 @@ exports.updateStore = async (req, res) => {
         timeSlots: Array.isArray(timeSlots) ? timeSlots : [],
         maxReservations: parseInt(maxReservations, 10) || 10 // que sea un entero
     };
-    console.log(updatedData);
 
     // Encuentra y actualiza el restaurante
     const store = await Store.findOneAndUpdate({ _id: req.params.id }, updatedData, {
         new: true,
         runValidators: true
     }).exec();
+
+    console.log(store);
     
     req.flash('success', `Successfully updated <strong>${store.name}</strong>.<a href="/store/${store.slug}">View store</a>`);
     res.redirect(`/stores/${store._id}/edit`);

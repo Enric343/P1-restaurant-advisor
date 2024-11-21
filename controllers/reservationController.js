@@ -8,7 +8,7 @@ exports.createReservation = async (req, res) => {
     const { restaurantId, date, timeSlot } = req.body;
     const restaurant = await Store.findById(restaurantId);
     const reservations = await Reservation.find({ restaurant: restaurantId, date, timeSlot });
-    console.log(new Date(date).getDay());
+    
     if (restaurant.closedDays.includes(days[new Date(date).getDay()])) {
         req.flash('error', `The restaurant is closed on this day.`);
     } else if (reservations.length >= restaurant.maxReservations) {

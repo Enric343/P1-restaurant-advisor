@@ -23,26 +23,26 @@ block content
 
         // SECCIÓ DE RESERVES
         if user
-        .no-gutters.row.mb-3
-            .pr-lg-2.col-lg-12.d-flex.justify-content-center
-                .card.card-body
-                    h5 Reserve
-                    form(method="POST", action="/reservations/add" class="reservation-form" style="margin-left: 30%;")
-                        input(type="hidden", name="restaurantId", value=store._id)
-                        label(for="date") Select a date:
-                        input(type="date", name="date", required, min=new Date().toISOString().split('T')[0])
-                        p.error-message Please, select a date.
+            .no-gutters.row.mb-3
+                .pr-lg-2.col-lg-12.d-flex.justify-content-center
+                    .card.card-body
+                        h5 Reserve
+                        form(method="POST", action="/reservations/add" class="reservation-form" style="margin-left: 30%;")
+                            input(type="hidden", name="restaurantId", value=store._id)
+                            label(for="date") Select a date:
+                            input(type="date", name="date", required, min=new Date().toISOString().split('T')[0])
+                            p.error-message Please, select a date.
 
-                        label(for="timeSlot") Select a time slot:
-                        select(name="timeSlot", required)
-                            option(value="" disabled selected) Select a time slot
-                            each slot in store.timeSlots
-                                option(value=slot) #{slot}
-                        p.error-message Please, select a time slot.
+                            label(for="timeSlot") Select a time slot:
+                            select(name="timeSlot", required)
+                                option(value="" disabled selected) Select a time slot
+                                each slot in store.timeSlots
+                                    option(value=slot) #{slot}
+                            p.error-message Please, select a time slot.
 
-                        button(type="submit" class="btn btn-primary mt-2") Reserve
+                            button(type="submit" class="btn btn-primary mt-2") Reserve
 
-        +reservations(reservations, false)
+            +reservations(reservations, false)
 
         #map.sm-map.mb-3 
 

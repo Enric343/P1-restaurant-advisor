@@ -33,19 +33,31 @@ mixin storeForm(store = {})
         .mb-3
             label(for="closedDays" class="form-label") Closed Days
             select(class="form-select select2" id="closedDays" name="closedDays" multiple)
-                option(value="Monday" selected=(store.closedDays.includes('Monday'))) Monday
-                option(value="Tuesday" selected=(store.closedDays.includes('Tuesday'))) Tuesday
-                option(value="Wednesday" selected=(store.closedDays.includes('Wednesday'))) Wednesday
-                option(value="Thursday" selected=(store.closedDays.includes('Thursday'))) Thursday
-                option(value="Friday" selected=(store.closedDays.includes('Friday'))) Friday
-                option(value="Saturday" selected=(store.closedDays.includes('Saturday'))) Saturday
-                option(value="Sunday" selected=(store.closedDays.includes('Sunday'))) Sunday
+                if store._id
+                    option(value="Monday" selected=(store.closedDays.includes('Monday'))) Monday
+                    option(value="Tuesday" selected=(store.closedDays.includes('Tuesday'))) Tuesday
+                    option(value="Wednesday" selected=(store.closedDays.includes('Wednesday'))) Wednesday
+                    option(value="Thursday" selected=(store.closedDays.includes('Thursday'))) Thursday
+                    option(value="Friday" selected=(store.closedDays.includes('Friday'))) Friday
+                    option(value="Saturday" selected=(store.closedDays.includes('Saturday'))) Saturday
+                    option(value="Sunday" selected=(store.closedDays.includes('Sunday'))) Sunday
+                else
+                    option(value="Monday") Monday
+                    option(value="Tuesday") Tuesday
+                    option(value="Wednesday") Wednesday
+                    option(value="Thursday") Thursday
+                    option(value="Friday") Friday
+                    option(value="Saturday") Saturday
+                    option(value="Sunday") Sunday
 
         .mb-3
             label(for="timeSlots" class="form-label") Time Slots
             select(class="form-control select2" id="timeSlots" name="timeSlots" multiple required)
                 each time in timeSlots
-                    option(value=time, selected=(store.timeSlots && store.timeSlots.includes(time))) #{time}
+                    if store._id
+                        option(value=time, selected=(store.timeSlots && store.timeSlots.includes(time))) #{time}
+                    else
+                        option(value=time) #{time}
 
 
         .mb-3

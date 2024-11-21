@@ -13,16 +13,13 @@ function searchResultsHTML(stores) {
 
 function typeAhead(search) {
     if (!search) {
-        console.log("TODO MAL!")
         return
     }
 
-    console.log("TODO BIEN ;)")
     const searchInput = search.querySelector('input[name="search"]');
     const searchResults = search.querySelector('.search__results');
     
     searchInput.addEventListener('input', function (e) {
-        console.log(`Buscaste: ${e}`)
         //there is no input, hide div for search results
         if (!this.value) {
             searchResults.style.display = 'none';
