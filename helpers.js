@@ -8,3 +8,8 @@ exports.menu = [
     { slug: '/add', title: 'Add', },
     { slug: '/my', title: 'My', },
 ];
+
+exports.admins = [
+    'admin@gmail.com',
+    'dev@gmail.com'
+]

@@ -21,6 +21,10 @@ const userSchema = new Schema({
     },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
+    isAdmin: {
+        type: Boolean,
+        default: false // por defecto NO eres admin
+    }
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });

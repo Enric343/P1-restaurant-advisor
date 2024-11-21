@@ -95,8 +95,29 @@ exports.getTopStores = async (req, res) => {
 
 exports.editStore = async (req, res) => {
     const store = await Store.findOne({ _id: req.params.id });
-    confirmOwner(store, req.user);
+
+    if (!req.user.isAdmin)
+        confirmOwner(store, req.user); // Si es admin no hace falta
+
     res.render('editStore', { title: `Edit ${store.name}`, store: store});
+};
+
+exports.deleteStore = async (req, res) => {
+    const page = req.params.page ||1;
+    const store = await Store.findOne({ _id: req.params.id });
+
+    if (!store) { // Por si no existe la tienda en concreto
+        req.flash('error', 'Store not found.');
+        return res.redirect(`/stores/page/${page}`);
+    }
+
+    if (!req.user.isAdmin)
+        confirmOwner(store, req.user); // Si es admin no hace falta
+
+    await Store.deleteOne({ _id: req.params.id });
+    
+    req.flash('success', `Successfully deleted <strong>${store.name}</strong>.`);
+    res.redirect(`/stores/page/${page}`);
 };
 
 //*** Verify Credentials
@@ -113,9 +134,7 @@ exports.updateStore = async (req, res) => {
         runValidators: true
     }).exec();
     
-    req.flash('success', `Successfully updated <strong>${store.name}</strong>.
-    
-    <a href="/store/${store.slug}">View store</a> `);
+    req.flash('success', `Successfully updated <strong>${store.name}</strong>.<a href="/store/${store.slug}">View store</a> `);
 
     res.redirect(`/stores/${store._id}/edit`);
 };

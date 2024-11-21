@@ -24,6 +24,12 @@ router.post('/add/',
     catchErrors(storeController.createStore) //save in DB
 );
 
+//DELETE STORE
+router.get('/stores/:id/delete',
+    authController.isLoggedIn,
+    catchErrors(storeController.deleteStore)
+);
+
 //1st step EDIT STORE -> show the form with current data
 router.get('/stores/:id/edit', catchErrors(storeController.editStore));
 

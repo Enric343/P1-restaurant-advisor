@@ -73,7 +73,16 @@ exports.validateRegister = (req, res, next) => {
 
 //MIDDLEWARE function for SIGN-UP
 exports.register = async (req, res, next) => {
-    const user = new User({ email: req.body.email, name: req.body.name });
-    await User.register(user, req.body.password);
-    next(); //go to the next middleware
+    // Comprueva si el usuario está en la lista de admins
+    let helpers = res.locals.h;
+    let isAdmin = helpers.admins.includes(req.body.email);
+    
+    try {
+        const user = new User({ email: req.body.email, name: req.body.name, isAdmin: isAdmin }); console.log(user);
+        await User.register(user, req.body.password);
+        next(); //go to the next middleware
+    } catch (e) {
+        req.flash('error', e);
+        res.render('register', { title: 'Register', body: req.body, flashes: req.flash() });
+    }
 };
