@@ -6,10 +6,10 @@ exports.menu = [
     { slug: '/tags', title: 'Tags', },
     { slug: '/top', title: 'Top', },
     { slug: '/add', title: 'Add', },
-    { slug: '/my', title: 'My', },
+    { slug: '/myTop', title: 'MyTop', },
 ];
 
 exports.admins = [
     'admin@gmail.com',
     'dev@gmail.com'
-]
+];

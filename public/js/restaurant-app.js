@@ -1,3 +1,6 @@
 import typeAhead from './modules/typeAhead';
 
-typeAhead(document.querySelector('.form-inline'));
+document.addEventListener('DOMContentLoaded', () => {
+    typeAhead(document.querySelector('.form-inline')); // Hago esto porque sinó no iba
+});
+

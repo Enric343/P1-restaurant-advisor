@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const slug = require('slugs');
+const { $where } = require('./User');
 
 const storeSchema = new mongoose.Schema({
     name: {
@@ -73,21 +74,50 @@ storeSchema.statics.getTopStores = function() {
                 as: 'reviews'
             }
         },
-        { $match: {
-            'reviews.1': { $exists: true}
+        {   $match: {
+                'reviews.1': { $exists: true}
             }
         },
-        { $addFields: {
-            averageRating: {$avg: '$reviews.rating'}
+        {   $addFields: {
+                averageRating: {$avg: '$reviews.rating'},
+                reviewCount: { $size: '$reviews' }
             }
         },
-        { $sort: {
-            averageRating: -1
+        {   $sort: {
+                averageRating: -1
             }
         },
-        { $limit: 10 }
+        {   $limit: 10  }
     ]);
 };
+
+
+storeSchema.statics.getUserTopStores = async function (uid) {
+    const stores = await mongoose.model('Store').find();
+    const topStores = [];
+
+    stores.forEach((store) => {
+        let count = 0;
+        let totalRating = 0;
+        store.reviews.forEach((review) => {
+            if (review.author._id.toString() === uid) {
+                count++;
+                totalRating += review.rating;
+            }
+        });
+
+        if (count != 0) {
+            store.averageRating = (totalRating/count).toFixed(1);
+            store.reviewCount = count;
+            topStores.push(store);
+        }
+    });
+
+    topStores.sort((s1, s2) => s2.averageRating - s1.averageRating);
+    return topStores;
+};
+
+
 
 
 // *********INDEXES**********

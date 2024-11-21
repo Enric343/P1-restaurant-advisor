@@ -90,7 +90,12 @@ exports.getStores = async (req, res) => {
 
 exports.getTopStores = async (req, res) => {
     const stores = await Store.getTopStores();
-    res.render('topStores', { stores, title: 'Top Stores'});
+    res.render('topStores', { stores, topType: 'Global Top', title: 'Global Top Stores'});
+};
+
+exports.getUserTopStores = async (req, res) => {
+    const stores = await Store.getUserTopStores(req.user._id.toString());
+    res.render('topStores', { stores, topType: 'Your Top', title: 'Your Top Stores' });
 };
 
 exports.editStore = async (req, res) => {

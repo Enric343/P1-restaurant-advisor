@@ -85,6 +85,12 @@ router.get('/stores/page/:page', catchErrors(storeController.getStores));
 //SHOW TOP STORES
 router.get('/top', catchErrors(storeController.getTopStores));
 
+//SHOW USER'S TOP STORES
+router.get('/myTop', 
+    authController.isLoggedIn,
+    catchErrors(storeController.getUserTopStores)
+);
+
 // SHOW all TAGs
 router.get('/tags', catchErrors(storeController.getStoresByTag));
 
