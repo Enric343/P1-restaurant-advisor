@@ -104,6 +104,9 @@ router.post('/account/reset/:token',
     catchErrors(authController.updatePassword)
 );
 
+//SHOW stores MAP with reviews
+router.get('/map', catchErrors(storeController.storesMap));
+
 //***API REST --> Functions to be consumed by the front end via AJAX
 
 //req.query -> /api/v1/search?q=hola

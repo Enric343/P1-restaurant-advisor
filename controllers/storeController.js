@@ -78,7 +78,9 @@ exports.getStoreBySlug = async (req, res, next) => {
         return;
     }
 
-    res.render('store', { title: `Store ${store.name}`, store: store});
+    rating = await store.getAverageRating();
+    
+    res.render('store', { title: store.name, store: store, rating: rating });
 };
 
 exports.getStores = async (req, res) => {
@@ -170,4 +172,30 @@ exports.getStores = async (req, res) => {
         title: 'Stores', stores: stores, page: page,
         pages: pages, count: count
     });
+};
+
+exports.storesMap = async (req, res) => {
+    try {
+        const stores = await Store.find(); // Obtener todas las tiendas
+
+        // Crear un array de promesas para calcular las valoraciones
+        const mapValuesPromises = stores.map(async (store) => {
+            const rating = await store.getAverageRating();
+
+            return {
+                name: store.name,
+                rating: rating.toFixed(1),
+                address: store.address
+            };
+        });
+
+        // Espera todas las promises
+        const mapValues = await Promise.all(mapValuesPromises);
+        
+        res.render('storesMap', { title: 'Stores Map', mapValues });
+
+    } catch (error) {
+        console.error('Error al obtener las tiendas o las valoraciones:', error);
+        res.status(500).send('Hubo un problema al cargar el mapa de tiendas.');
+    }
 };

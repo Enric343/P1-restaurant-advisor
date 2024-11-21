@@ -178,6 +178,14 @@
   text-align: center;
 }
 
+.sm-map {
+  height: 400px;
+}
+
+.lg-map {
+  height: 80vh;
+}
+
 @media all and (max-width: 850px) {
   .store {
     width: calc(50% - 1.25em);

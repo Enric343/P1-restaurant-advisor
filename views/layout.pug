@@ -5,7 +5,16 @@ html
     link(rel='stylesheet', href='/css/style.css')
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel="stylesheet" href="/icons/font-awesome/css/font-awesome.min.css")
+    link(rel="stylesheet", href="https://unpkg.com/leaflet/dist/leaflet.css")
+    link(rel="stylesheet", href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css")
     link(rel='icon', href='data:;base64,iVBORw0KGgo=')
+
+    script(src="/dist/jquery-3.7.1.min.js")
+    script(src="/dist/bootstrap.bundle.min.js")
+    script(src="https://unpkg.com/leaflet/dist/leaflet.js")
+    script(src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js")
+    script(src="/dist/app.bundle.js")
+
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
     block header
@@ -54,9 +63,5 @@ html
                 .alert(class=`${category}`)
                   != message
                   span.closebtn(onClick="this.parentElement.remove()") &times;
-      block content
 
-    block scripts
-      script(src="/dist/jquery-3.7.1.min.js")
-      script(src="/dist/bootstrap.bundle.min.js")
-      script(src="/dist/app.bundle.js")
+      block content

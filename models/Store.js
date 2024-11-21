@@ -42,8 +42,18 @@ function autopopulate(next) {
     this.populate('reviews');
     next();
 }
+
 storeSchema.pre('find', autopopulate);
 storeSchema.pre('findOne', autopopulate);
+
+storeSchema.methods.getAverageRating = async function() {
+    const reviews = await mongoose.model('Review').find({ store: this._id });
+
+    if (reviews.length === 0) return 0;
+
+    // Calcular la media de las valoraciones
+    return reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
+};
 
 storeSchema.statics.getTagsList = function() {
     return this.aggregate([

@@ -11,7 +11,7 @@ block content
                 h5.fs-0 #{store.name}
                 p.mb-0= store.address
 
-        .no-gutters.row
+        .no-gutters.row.mb-3
             .pr-lg-2.col-lg-12
                 .card
                     .card-body
@@ -19,6 +19,9 @@ block content
                         if store.tags
                             each tag in store.tags
                                 a.badge.bg-light.text-primary(href=`/tags/${tag}`) ##{tag}
+
+        #map.sm-map.mb-3 
+
         if user
             .no-gutters.row
                 .pt-3.lg-2.col-lg-12
@@ -32,3 +35,9 @@ block content
                         .card
                         .card-body
                             +review(r)
+
+    script.
+        const store = !{JSON.stringify(store)};
+        const rating = !{rating.toFixed(1)};
+
+    script(type="module" src="/js/storeMap.js")
