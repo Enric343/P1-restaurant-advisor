@@ -1,0 +1,25 @@
+mixin reservations(reservations, showStore)
+    if reservations && reservations.length > 0
+        .no-gutters.row.mb-3
+            .pr-lg-2.col-lg-12
+                .card.card-body
+                    h5 My reservations
+                    ul.list-group
+                        each reservation in reservations
+                            li.list-group-item
+                                form(method="POST", action=`/reservations/${reservation._id}/delete`)
+                                    if showStore
+                                        a(href=`/store/${reservation.store.slug}`) #{reservation.store.name}
+                                        |  - 
+                                    | #{reservation.date.toDateString()} - #{reservation.timeSlot} 
+                                    
+                                    if reservation.isNotExpired()
+                                        button.btn.btn-danger.btn-sm.float-end(type="submit") Cancel
+                                    else
+                                        button.btn.btn-secondary.disabled.btn-sm.float-end(type="button") Expired
+    else    
+        .no-gutters.row.mb-3
+            .pr-lg-2.col-lg-12
+                .card
+                    .card-body
+                        p You don't have any reservations yet.

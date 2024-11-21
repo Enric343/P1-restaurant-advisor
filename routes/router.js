@@ -5,6 +5,7 @@ const storeController = require('../controllers/storeController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const reviewController = require('../controllers/reviewController');
+const reservationController = require('../controllers/reservationController');
 
 const { catchErrors } = require('../handlers/errorHandler');
 
@@ -118,6 +119,18 @@ router.post('/account/reset/:token',
 
 //SHOW stores MAP with reviews
 router.get('/map', catchErrors(storeController.storesMap));
+
+// Create reservation
+router.post('/reservations/add',
+    authController.isLoggedIn,
+    catchErrors(reservationController.createReservation)
+);
+
+//DELETE STORE
+router.post('/reservations/:id/delete',
+    authController.isLoggedIn,
+    catchErrors(reservationController.deleteReservation)
+);
 
 //***API REST --> Functions to be consumed by the front end via AJAX
 

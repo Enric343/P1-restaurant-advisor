@@ -3,6 +3,8 @@ const multer = require('multer');
 const uuid = require('uuid');
 const { Jimp } = require('jimp');
 const mongoose = require('mongoose');
+const { timeSlots } = require('../helpers');
+const Reservation = mongoose.model('Reservation');
 const Store = mongoose.model('Store');
 
 
@@ -78,9 +80,11 @@ exports.getStoreBySlug = async (req, res, next) => {
         return;
     }
 
-    rating = await store.getAverageRating();
+    let rating = await store.getAverageRating();
+    let reservations = await Reservation.findNotExpired(req.user._id,  store._id );
+    reservations.sort((a, b) => a.date - b.date);
     
-    res.render('store', { title: store.name, store: store, rating: rating });
+    res.render('store', { title: store.name, store: store, rating: rating,  reservations: reservations });
 };
 
 exports.getStores = async (req, res) => {
@@ -104,7 +108,7 @@ exports.editStore = async (req, res) => {
     if (!req.user.isAdmin)
         confirmOwner(store, req.user); // Si es admin no hace falta
 
-    res.render('editStore', { title: `Edit ${store.name}`, store: store});
+    res.render('editStore', { title: `Edit ${store.name}`, store: store, timeSlots: res.locals.h.timeSlots });
 };
 
 exports.deleteStore = async (req, res) => {
@@ -133,14 +137,24 @@ const confirmOwner = (store, user) => {
 };
 
 exports.updateStore = async (req, res) => {
-    // find and update the store
-    const store = await Store.findOneAndUpdate({ _id: req.params.id }, req.body, {
-        new: true, //return new store instead of old one
+    // Capturar los datos enviados desde el formulario
+    const { closedDays, timeSlots, maxReservations } = req.body;
+    
+    const updatedData = {
+        ...req.body,
+        closedDays: Array.isArray(closedDays) ? closedDays : [],
+        timeSlots: Array.isArray(timeSlots) ? timeSlots : [],
+        maxReservations: parseInt(maxReservations, 10) || 10 // que sea un entero
+    };
+    console.log(updatedData);
+
+    // Encuentra y actualiza el restaurante
+    const store = await Store.findOneAndUpdate({ _id: req.params.id }, updatedData, {
+        new: true,
         runValidators: true
     }).exec();
     
-    req.flash('success', `Successfully updated <strong>${store.name}</strong>.<a href="/store/${store.slug}">View store</a> `);
-
+    req.flash('success', `Successfully updated <strong>${store.name}</strong>.<a href="/store/${store.slug}">View store</a>`);
     res.redirect(`/stores/${store._id}/edit`);
 };
 

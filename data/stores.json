@@ -8,7 +8,10 @@
         "author":"58c039018060197ca0b52d4c",
         "photo":"1.jpg",
         "tags":["Wifi","Open Late","Vegan"],
-        "created":"2017-03-08T17:04:19.860Z"
+        "created":"2017-03-08T17:04:19.860Z",
+        "closedDays": ["Sunday"],
+        "timeSlots": ["12:00-14:00", "18:00-20:00"],
+        "maxReservations": 15
     },
     {
         "_id":"58c039ee8060197ca0b52d4e",
@@ -19,7 +22,10 @@
         "author":"58c03ada8060197ca0b52d52",
         "photo":"2.jpg",
         "tags":["Vegan"],
-        "created":"2017-03-08T17:05:50.134Z"
+        "created":"2017-03-08T17:05:50.134Z",
+        "closedDays": ["Monday", "Tuesday"],
+        "timeSlots": ["10:00-12:00", "14:00-16:00"],
+        "maxReservations": 10
     },
     {
         "_id":"58c03a428060197ca0b52d4f",
@@ -30,7 +36,10 @@
         "author":"58c039018060197ca0b52d4c",
         "photo":"3.jpg",
         "tags":["Open Late"],
-        "created":"2017-03-08T17:07:14.681Z"
+        "created":"2017-03-08T17:07:14.681Z",
+        "closedDays": ["Wednesday"],
+        "timeSlots": ["12:00-15:00", "19:00-22:00"],
+        "maxReservations": 20
     },
     {
         "_id":"58c03a958060197ca0b52d50",
@@ -41,7 +50,10 @@
         "author":"58c039018060197ca0b52d4c",
         "photo":"4.jpg",
         "tags":["Wifi","Open Late","Family Friendly"],
-        "created":"2017-03-08T17:08:37.131Z"
+        "created":"2017-03-08T17:08:37.131Z",
+        "closedDays": ["Saturday"],
+        "timeSlots": ["09:00-11:00", "15:00-17:00"],
+        "maxReservations": 25
     },
     {
         "_id":"58c057838060197ca0b52d54",
@@ -52,7 +64,10 @@
         "author":"58c03ada8060197ca0b52d52",
         "photo":"8.jpg",
         "tags":["Wifi","Vegan"],
-        "created":"2017-03-08T19:12:03.957Z"
+        "created":"2017-03-08T19:12:03.957Z",
+        "closedDays": ["Sunday", "Monday"],
+        "timeSlots": ["12:00-14:00", "18:00-20:00"],
+        "maxReservations": 12
     },
     {
         "_id":"58c05aef8060197ca0b52d55",
@@ -63,7 +78,10 @@
         "author":"58c039018060197ca0b52d4c",
         "photo":"6.jpg",
         "tags":["Open Late"],
-        "created":"2017-03-08T19:26:39.863Z"
+        "created":"2017-03-08T19:26:39.863Z",
+        "closedDays": ["Thursday"],
+        "timeSlots": ["17:00-19:00", "20:00-22:00"],
+        "maxReservations": 18
     },
     {
         "_id":"58c05b558060197ca0b52d56",
@@ -74,7 +92,10 @@
         "author":"58c039018060197ca0b52d4c",
         "photo":"7.jpg",
         "tags":["Wifi","Open Late"],
-        "created":"2017-03-08T19:28:21.738Z"
+        "created":"2017-03-08T19:28:21.738Z",
+        "closedDays": [],
+        "timeSlots": ["11:00-13:00", "18:00-20:00"],
+        "maxReservations": 14
     },
     {
         "_id":"58c05bcd8060197ca0b52d57",
@@ -85,6 +106,9 @@
         "author":"58c039018060197ca0b52d4c",
         "photo":"5.jpg",
         "tags":["Vegan"],
-        "created":"2017-03-08T19:30:21.147Z"
+        "created":"2017-03-08T19:30:21.147Z",
+        "closedDays": ["Tuesday"],
+        "timeSlots": ["10:00-12:00", "16:00-18:00"],
+        "maxReservations": 10
     }
 ]

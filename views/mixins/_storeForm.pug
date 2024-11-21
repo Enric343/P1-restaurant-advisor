@@ -1,4 +1,3 @@
-
 mixin storeForm(store = {})
 
     form(action=`/add/${store._id || ''}` method="POST" enctype="multipart/form-data")
@@ -30,5 +29,27 @@ mixin storeForm(store = {})
                 .form-check-label
                     input(class="form-check-input" type="checkbox" id=choice value=choice name="tags" checked=(tags.includes(choice)))
                     label(for=choice class="form-check-label") #{choice}
-                    
+
+        .mb-3
+            label(for="closedDays" class="form-label") Closed Days
+            select(class="form-select select2" id="closedDays" name="closedDays" multiple)
+                option(value="Monday" selected=(store.closedDays.includes('Monday'))) Monday
+                option(value="Tuesday" selected=(store.closedDays.includes('Tuesday'))) Tuesday
+                option(value="Wednesday" selected=(store.closedDays.includes('Wednesday'))) Wednesday
+                option(value="Thursday" selected=(store.closedDays.includes('Thursday'))) Thursday
+                option(value="Friday" selected=(store.closedDays.includes('Friday'))) Friday
+                option(value="Saturday" selected=(store.closedDays.includes('Saturday'))) Saturday
+                option(value="Sunday" selected=(store.closedDays.includes('Sunday'))) Sunday
+
+        .mb-3
+            label(for="timeSlots" class="form-label") Time Slots
+            select(class="form-control select2" id="timeSlots" name="timeSlots" multiple required)
+                each time in timeSlots
+                    option(value=time, selected=(store.timeSlots && store.timeSlots.includes(time))) #{time}
+
+
+        .mb-3
+            label(for="maxReservations" class="form-label") Max Reservations Per Slot
+            input(class="form-control" type="number" id="maxReservations" name="maxReservations" value=store.maxReservations required)
+
         button(type="submit" class="btn btn-primary") Save

@@ -1,13 +1,24 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Reservation = mongoose.model('Reservation');
+
 const { body, validationResult } = require('express-validator');
 
 exports.registerForm = (req, res) => {
     res.render('register', { title: 'Register'});
 };
 
-exports.account = (req, res) => {
-    res.render('account', {title: 'Edit your account'});
+exports.account = async (req, res) => {
+    const reservations = await Reservation.find({ user: req.user._id });
+
+    for (let reservation of reservations) {
+        store = await reservation.getStore();  // Incluye los nombres 
+        reservation.store = store;
+    }
+
+    reservations.sort((a, b) => a.date - b.date);
+
+    res.render('account', {title: 'Edit your account', reservations: reservations});
 };
 
 exports.updateAccount = async (req, res) => {
