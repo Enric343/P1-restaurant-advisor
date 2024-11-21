@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    .container
+        #map.lg-map
+
+    script.
+        const mapValues = !{JSON.stringify(mapValues)};
+
+    script(type="module" src="/js/storesMap.js")
